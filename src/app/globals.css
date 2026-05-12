@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Chat façon salon vidéo (Chatroulette-like) */
+@keyframes cr-pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px #34d399;
+  }
+  50% {
+    opacity: 0.65;
+    box-shadow: 0 0 14px #6ee7b7;
+  }
+}
+
+.cr-live-dot {
+  animation: cr-pulse-dot 2s ease-in-out infinite;
+}
+
+.cr-scanlines::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  opacity: 0.35;
+  z-index: 1;
+}
+
+.scrollbar-cr {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(63 63 70) rgb(24 24 27);
+}
+
+.scrollbar-cr::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-cr::-webkit-scrollbar-track {
+  background: rgb(24 24 27);
+  border-radius: 9999px;
+}
+
+.scrollbar-cr::-webkit-scrollbar-thumb {
+  background: rgb(63 63 70);
+  border-radius: 9999px;
+}
+
+.scrollbar-cr::-webkit-scrollbar-thumb:hover {
+  background: rgb(82 82 91);
+}
