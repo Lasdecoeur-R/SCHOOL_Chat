@@ -5,6 +5,14 @@ export function proxy(request: NextRequest) {
   const session = getSessionCookie(request);
   const { pathname } = request.nextUrl;
 
+  // Accueil : sans session → login, avec session → salon
+  if (pathname === "/") {
+    if (session) {
+      return NextResponse.redirect(new URL("/chat", request.url));
+    }
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
   // Si l'utilisateur va sur /chat sans etre connecte → login
   if (pathname.startsWith("/chat") && !session) {
     return NextResponse.redirect(new URL("/login", request.url));
@@ -21,5 +29,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/chat/:path*", "/login", "/register"],
+  matcher: ["/", "/chat/:path*", "/login", "/register"],
 };
